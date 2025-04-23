@@ -1,0 +1,15 @@
+com/example/dao/CartDAO.class
+com/example/dao/CustomerDAO.class
+com/example/model/Order.class
+com/example/dao/OrderDAO.class
+com/example/resource/AuthorResource.class
+com/example/resource/CustomerResource.class
+com/example/resource/BookResource.class
+com/example/model/Author.class
+com/example/dao/AuthorDAO.class
+com/example/model/Customer.class
+com/example/resource/CartResource.class
+com/example/resource/OrderResource.class
+com/example/dao/BookDAO.class
+com/example/model/Book.class
+com/example/model/Cart.class
