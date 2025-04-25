@@ -19,15 +19,15 @@ public class BookResource {
     private BookDAO bookDAO = new BookDAO();
     private static final Logger logger = LoggerFactory.getLogger(BookResource.class);
 
+    // GET all books 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Book> getAllBooks() {
         logger.info("GET request for all Books");
         return bookDAO.getAllBooks();
     }
 
+    //  GET single book by ID
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
     public Book getBookById(@PathParam("id") int bookId) {
         logger.info("GET request for book with ID: {}", bookId);
@@ -40,8 +40,10 @@ public class BookResource {
         return book;
     }
 
+    //  Ensure client sends a complete Book object — especially the nested Author field
+
+    //  POST new book 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response addBook(Book book) {
         bookDAO.addBook(book);
         logger.info("Added new Book with ID: {}", book.getBookId());
@@ -50,9 +52,9 @@ public class BookResource {
                 .build();
     }
 
+     // PUT update book by ID
     @PUT
     @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateBook(@PathParam("id") int bookId, Book updatedBook) {
         logger.info("PUT request to update book with ID: {}", bookId);
         Book book = bookDAO.getBookById(bookId);
@@ -67,6 +69,7 @@ public class BookResource {
         return Response.ok(updatedBook).build();
     }
 
+    // DELETE book by ID
     @DELETE
     @Path("/{id}")
     public Response deleteBook(@PathParam("id") int bookId) {
@@ -81,4 +84,7 @@ public class BookResource {
         logger.info("Deleted book with ID: {}", bookId);
         return Response.noContent().build();
     }
+    
+    
 }
+

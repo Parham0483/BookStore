@@ -14,10 +14,10 @@ public class CartDAO {
     private static Map<Integer, Cart> carts = new HashMap<>(); // Key: Customer ID, Value: Cart
     private BookDAO bookDAO = new BookDAO();
     
+    //Returns all carts as a list.
     public List<Cart> getAllCart() {
-        return (List<Cart>) carts;
-    }
-
+    return new ArrayList<>(carts.values()); 
+}
     public Cart getCartByCustomerId(int customerId) {
         return carts.get(customerId);
     }

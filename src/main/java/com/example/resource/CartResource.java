@@ -34,15 +34,14 @@ public class CartResource {
     private CustomerDAO customerDAO = new CustomerDAO();
     private static final Logger logger = LoggerFactory.getLogger(CartResource.class);
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Map<Integer, Cart> getAllCarts() {
-        logger.info("GET request for all Carts");
-        return (Map<Integer, Cart>) cartDAO.getAllCart();
-    }
+   // @GET
+    //@Path("/all") 
+    //public Response getAllCarts() {
+    //logger.info("GET request for all Carts");
+    //return Response.ok(cartDAO.getAllCart()).build(); // returns List<Cart>
+//}
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getCartByCustomerId(@PathParam("customerId") int customerId) {
         logger.info("GET request for Cart by Customer ID");
         Customer customer = customerDAO.getCustomerById(customerId);
@@ -62,7 +61,6 @@ public class CartResource {
 
     @POST
     @Path("/items")
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response addBookToCart(@PathParam("customerId") int customerId, @QueryParam("bookId") int bookId, @QueryParam("quantity") int quantity) {
         logger.info("POST request to add Book ID {} with Quantity {} to Cart for Customer ID: {}", bookId, quantity, customerId);
 
@@ -92,7 +90,6 @@ public class CartResource {
 
     @PUT
     @Path("/items/{bookId}")
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateBookQuantity(@PathParam("customerId") int customerId, @PathParam("bookId") int bookId, @QueryParam("quantity") int quantity) {
         logger.info("PUT request to update Book ID {} with new Quantity {} in Cart for Customer ID: {}", bookId, quantity, customerId);
 
@@ -120,7 +117,6 @@ public class CartResource {
 
     @DELETE
     @Path("/items/{bookId}")
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response removeBookFromCart(@PathParam("customerId") int customerId, @PathParam("bookId") int bookId) {
         logger.info("DELETE request to remove Book ID {} from Cart for Customer ID: {}", bookId, customerId);
 

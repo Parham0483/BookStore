@@ -6,7 +6,6 @@ package com.example.resource;
 
 import com.example.exception.CustomerNotFoundException;
 import com.example.exception.BookNotFoundException;
-import com.example.exception.CustomerNotFoundException;
 
 import com.example.dao.CustomerDAO;
 import com.example.model.Customer;
@@ -26,15 +25,15 @@ public class CustomerResource {
     private CustomerDAO customerDAO = new CustomerDAO();
     private static final Logger logger = LoggerFactory.getLogger(CustomerResource.class);
 
+    // GET /customers - Retrieve all customers
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Customer> getAllCustomers() {
         return customerDAO.getAllCustomers();
     }
 
+    // GET /customers/{id} - Retrieve a customer by ID
     @GET
     @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getCustomerById(@PathParam("id") int customerId) {
         Customer customer = customerDAO.getCustomerById(customerId);
         if (customer == null) {
@@ -45,8 +44,8 @@ public class CustomerResource {
         return Response.ok(customer).build();
     }
 
+    // POST /customers - Create a new customer with a unique ID
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response addCustomer(Customer customer) {
         customer.setCustomerId(customerDAO.getNextUserId()); // Ensure unique ID
         customerDAO.addCustomer(customer);
@@ -56,9 +55,9 @@ public class CustomerResource {
                 .build();
     }
 
+    // PUT /customers/{id} - Update customer data by ID
     @PUT
     @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateCustomer(@PathParam("id") int customerId, Customer updatedCustomer) {
         Customer customer = customerDAO.getCustomerById(customerId);
         if (customer == null) {
@@ -72,9 +71,9 @@ public class CustomerResource {
         return Response.ok(updatedCustomer).build();
     }
 
+    // DELETE /customers/{id} - Remove customer by ID
     @DELETE
     @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteCustomer(@PathParam("id") int customerId) {
         Customer customer = customerDAO.getCustomerById(customerId);
         if (customer == null) {

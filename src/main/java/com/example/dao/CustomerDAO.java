@@ -35,6 +35,7 @@ public class CustomerDAO {
 
     //Add a new customer to list
     public void addCustomer(Customer customer) {
+        customer.setCustomerId(getNextUserId()); // Ensure uniqueness
         customers.add(customer);
     }
 

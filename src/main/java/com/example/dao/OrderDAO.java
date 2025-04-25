@@ -17,14 +17,17 @@ public class OrderDAO {
     private BookDAO bookDAO = new BookDAO();
     private CartDAO cartDAO = new CartDAO();
 
+    // Retrieve all orders
     public List<Order> getAllOrders() {
         return new ArrayList<>(orders.values());
     }
 
+    // Retrieve a single order by order ID
     public Order getOrderById(int orderId) {
         return orders.get(orderId);
     }
 
+    // Get all orders placed by a specific customer
     public List<Order> getOrdersByCustomerId(int customerId) {
         List<Order> customerOrders = new ArrayList<>();
         for (Order order : orders.values()) {
@@ -33,6 +36,14 @@ public class OrderDAO {
             }
         }
         return customerOrders;
+    }
+  
+    // Create and store a new order with auto-incremented order ID
+    public Order createOrder(int customerId, Map<Integer, Integer> items, double totalAmount) {
+        int orderId = orderCounter++;
+        Order order = new Order(orderId, customerId, items, totalAmount);
+        orders.put(orderId, order);
+        return order;
     }
 
 }

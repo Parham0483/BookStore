@@ -22,21 +22,24 @@ import org.slf4j.LoggerFactory;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class AuthorResource {
-
+    
+    // DAO for author operations and book
     private AuthorDAO authorDAO = new AuthorDAO();
     private BookDAO bookDAO = new BookDAO();
+    
+    // Logging setup
     private static final Logger logger = LoggerFactory.getLogger(BookResource.class);
 
+    //GET all authors.
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Author> getAllAuthors() {
         logger.info("GET request for all Authors");
         return authorDAO.getAllAuthors();
     }
 
+    //GET specific author by ID.
     @GET
     @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getAuthorById(@PathParam("id") int authorId) {
         logger.info("GET request for Author with ID: {}", authorId);
 
@@ -47,8 +50,8 @@ public class AuthorResource {
         return Response.ok(author).build();
     }
 
+    //POST - Create a new author.
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response addAuthor(Author author) {
         logger.info("Added new Author with ID: {}", author.getAuthorId());
         authorDAO.addAuthor(author);
@@ -57,9 +60,9 @@ public class AuthorResource {
                 .build();
     }
 
+    //PUT - Update author by ID.
     @PUT
     @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateAuthor(@PathParam("id") int authorId, Author updatedAuthor) {
         logger.info("PUT request to update Author with ID: {}", authorId);
         Author author = authorDAO.getAuthorById(authorId);
@@ -73,6 +76,7 @@ public class AuthorResource {
         return Response.ok(updatedAuthor).build();
     }
 
+    //DELETE an author by ID.
     @DELETE
     @Path("/{id}")
     public Response deleteAuthor(@PathParam("id") int authorId) {
@@ -86,10 +90,9 @@ public class AuthorResource {
         return Response.noContent().build();
     }
 
+    //GET all books by a specific author ID.
     @GET
     @Path("/{id}/books")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getBooksByAuthor(@PathParam("id") int authorId) {
         logger.info("GET request for books for author with ID: {}", authorId);
 
